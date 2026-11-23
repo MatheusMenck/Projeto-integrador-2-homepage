@@ -14,13 +14,43 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav-container" aria-label="Navegação Principal">
-      <a href="#hero" class="nav-logo" title="Recanto Betel - Início">
-        <img src="img/logo2.png" alt="Logo Associação Recanto Betel" width="62" height="62">
-      </a>
-      <ul class="nav-menu">
-        <li><a href="#hero">Início</a></li>
+<header class="site-header">
+  <nav class="nav-container" aria-label="Navegação Principal">
+    <a href="#hero" class="nav-logo" title="Recanto Betel - Início">
+      <img src="img/logo2.png" alt="Logo Associação Recanto Betel" width="62" height="62">
+    </a>
+
+    <ul class="nav-menu">
+      <li><a href="#hero">Introdução</a></li>
+      <li><a href="#sobre">Nossa História</a></li>
+      <li><a href="#atividades">Serviços SCFV</a></li>
+      <li><a href="#reconhecimentos">Projetos e Atividades</a></li>
+      <li><a href="#prestacao">Transparência</a></li>
+      <li><a href="#apoio">Como contribuir</a></li>
+      <li><a href="#noticias">Notícias</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-drawer">
+      <span class="hamburger"></span>
+    </button>
+  </nav>
+</header>
+
+<div class="mobile-drawer-overlay" id="mobile-drawer" aria-hidden="true">
+  <aside class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Menu de navegação">
+    <div class="mobile-drawer-header">
+      <img src="img/logo2.png" alt="Recanto Betel" height="48" width="48">
+      <button class="mobile-drawer-close" aria-label="Fechar menu">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="mobile-drawer-nav" aria-label="Navegação Mobile">
+      <ul>
+        <li><a href="#hero">Introdução</a></li>
         <li><a href="#sobre">Nossa História</a></li>
         <li><a href="#atividades">Serviços SCFV</a></li>
         <li><a href="#reconhecimentos">Projetos e Atividades</a></li>
@@ -30,7 +60,13 @@
         <li><a href="#contato">Contato</a></li>
       </ul>
     </nav>
-  </header>
+
+    <div class="mobile-drawer-footer">
+      <p>Ajude o Recanto Betel a transformar vidas.</p>
+      <a href="#apoio" class="mobile-drawer-cta">Quero contribuir →</a>
+    </div>
+  </aside>
+</div>
   <main id="main-content">
 
     <section class="hero" id="hero">
@@ -715,7 +751,7 @@
       </div>
       <div class="footer-center">
         <div class="footer-logo-brand">
-          <img src="img/logo.png" alt="Logo Associação Recanto Betel" loading="lazy">
+          <img src="img/logo2.png" alt="Logo Associação Recanto Betel" loading="lazy">
           <span>Associação Recanto Betel</span>
         </div>
         <p>CNPJ 47.818.778/0001-76 — Organização da Sociedade Civil sem fins lucrativos<br>Rua Prefeito Manoel Luiz da Silva Sá, 438 · Vila Paulina/Valinho · Tatuí/SP · CEP 18270-010</p>
@@ -774,6 +810,42 @@
         btn.textContent = textoOriginal;
       }, 2000);
     }
+
+    (function () {
+      const toggle   = document.querySelector('.nav-toggle');
+      const overlay  = document.getElementById('mobile-drawer');
+      const closeBtn = overlay.querySelector('.mobile-drawer-close');
+      const links    = overlay.querySelectorAll('.mobile-drawer-nav a');
+
+      const openMenu = () => {
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('menu-open');
+        closeBtn.focus();
+      };
+
+      const closeMenu = () => {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-open');
+        toggle.focus();
+      };
+
+      toggle.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeMenu();
+      });
+
+      links.forEach(link => link.addEventListener('click', closeMenu));
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeMenu();
+      });
+    })();
   </script>
 </body>
 </html>
